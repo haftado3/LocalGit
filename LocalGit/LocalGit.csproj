@@ -86,6 +86,7 @@
     <Compile Include="Entities\FileEntity.cs" />
     <Compile Include="Entities\DirectoryEntity.cs" />
     <Compile Include="Entities\Menu\MenuItem.cs" />
+    <Compile Include="Entities\NullEntity.cs" />
     <Compile Include="Static\GetFolderIcon.cs" />
     <Compile Include="Entities\IFile.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

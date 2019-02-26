@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
-namespace LocalGit.Static
+namespace LocalGit.Entities
 {
     public enum InfoType{
         File,Folder

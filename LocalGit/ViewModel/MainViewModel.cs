@@ -1,4 +1,4 @@
-﻿using LocalGit.Static;
+﻿using LocalGit.Entities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -35,47 +35,67 @@ namespace LocalGit.ViewModel
         {
             Populate();
         }
-        private void Populate()
+        private async void Populate()
         {
             Items.Clear();
-            foreach (var dirinfo in ItemsLocation.GetDirectories())
+            try
             {
-                DirectoryEntity de = new DirectoryEntity();
-                de.Size = DirSize(dirinfo);
-                de.Name = dirinfo.Name;
-                var ico = GetFolderIcon.FromPath(dirinfo.FullName);
-                de.Icon = Imaging.CreateBitmapSourceFromHIcon(ico.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-                Items.Add(de);
+                foreach (var dirinfo in ItemsLocation.GetDirectories())
+                {
+                    DirectoryEntity de = new DirectoryEntity();
+                    de.Size = await DirSize(dirinfo);
+                    de.Name = dirinfo.Name;
+                    var ico = GetFolderIcon.FromPath(dirinfo.FullName);
+                    de.Icon = Imaging.CreateBitmapSourceFromHIcon(ico.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                    Items.Add(de);
+                }
+                foreach (var fileinfo in ItemsLocation.GetFiles())
+                {
+                    FileEntity fe = new FileEntity();
+                    fe.Name = Path.GetFileNameWithoutExtension(fileinfo.Name);
+                    fe.Size = fileinfo.Length;
+                    fe.Type = Path.GetExtension(fileinfo.Name).Substring(1);
+                    var ico = System.Drawing.Icon.ExtractAssociatedIcon(fileinfo.FullName);
+                    fe.Icon = Imaging.CreateBitmapSourceFromHIcon(ico.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                    Items.Add(fe);
+                }
             }
-            foreach (var fileinfo in ItemsLocation.GetFiles())
+            catch (System.UnauthorizedAccessException ex)
             {
-                FileEntity fe = new FileEntity();
-                fe.Name = Path.GetFileNameWithoutExtension( fileinfo.Name);
-                fe.Size = fileinfo.Length;
-                fe.Type = Path.GetExtension(fileinfo.Name).Substring(1);
-                var ico = System.Drawing.Icon.ExtractAssociatedIcon(fileinfo.FullName);
-                fe.Icon = Imaging.CreateBitmapSourceFromHIcon(ico.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-                Items.Add(fe);
+
             }
+            Items.Add(new NullEntity());
         }
-        public static long DirSize(DirectoryInfo d)
+
+        public async Task<long> DirSize(DirectoryInfo d)
         {
-            long size = 0;
-            // Add file sizes.
-            FileInfo[] fis = d.GetFiles();
-            foreach (FileInfo fi in fis)
-            {
-                size += fi.Length;
-            }
-            // Add subdirectory sizes.
-            DirectoryInfo[] dis = d.GetDirectories();
-            foreach (DirectoryInfo di in dis)
-            {
-                size += DirSize(di);
-            }
-            return size;
+            return await Task.Run(async() => {
+                long size = 0;
+                // Add file sizes.
+                try
+                {
+                    FileInfo[] fis = d.GetFiles();
+                    foreach (FileInfo fi in fis)
+                    {
+                        size += fi.Length;
+                    }
+
+                    // Add subdirectory sizes.
+                    DirectoryInfo[] dis = d.GetDirectories();
+                    foreach (DirectoryInfo di in dis)
+                    {
+                        size += await DirSize(di);
+                    }
+                }
+                catch (System.UnauthorizedAccessException ex)
+                {
+
+                }
+                return size;
+            }).ConfigureAwait(false);
+            
         }
-        private DirectoryInfo _itemsLocation = new DirectoryInfo("D:\\Games");
+        private DirectoryInfo _itemsLocation = new DirectoryInfo("D:\\");
         public DirectoryInfo ItemsLocation { get
             {
                 return _itemsLocation;
