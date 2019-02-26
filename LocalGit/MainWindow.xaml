@@ -10,31 +10,72 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
         d:DataContext="{Binding Source={StaticResource DesignVM}}"
-        Title="MainWindow" Height="600" Width="800">
+        Title="MainWindow" x:Name="mainWindow" Height="600" Width="800">
     <Window.Resources>
         <vm:MainViewModel x:Key="DesignVM"/>
         <cv:FileSizeConverter x:Key="SizeConverter"/>
         <cv:BooleanToVisibilityConverter x:Key="boolToVisibillityConverter"/>
+        <cv:IsSmallResolution x:Key="IsSmallResolution"/>
+        <!--left grids template for big resolution-->
+        <DataTemplate x:Key="BigTemplate">
+            <Grid Width="150" Background="Silver">
+                
+            </Grid>
+        </DataTemplate>
+        <!--left grids template for small resolution-->
+        <DataTemplate x:Key="SmallTemplate">
+            <Grid Width="50" Background="Sienna">
+                
+            </Grid>
+        </DataTemplate>
     </Window.Resources>
+   
     <Grid>
-        <ScrollViewer>
-        <ItemsControl ItemsSource="{Binding Path=Items}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                        <Button x:Name="parentGrid" Style="{DynamicResource SquareButtonStyle}" BorderBrush="{x:Null}">
-                        <Grid Width="120" Height="120" >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition />
-                                <RowDefinition Height="20"/>
-                            </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 
-                            <Grid Grid.ColumnSpan="3" Height="30" Visibility="{Binding Path=IsMouseOver, ElementName=parentGrid, Converter={StaticResource boolToVisibillityConverter}}">
-                                <StackPanel VerticalAlignment="Center" Orientation="Horizontal" FlowDirection="RightToLeft">
+            <!--i'm using content control here to have two different views in one control, one for small width and one for big width , i can create different views in one page using content control just bind its ContentTemplate to your view , i think ContentPresenter can do this too-->
+        <ContentControl Grid.RowSpan="2">
+            <ContentControl.Style>
+                <Style TargetType="ContentControl">
+                    <!--set contents template default value for bigtemplate-->
+                    <Setter Property="ContentTemplate" Value="{StaticResource BigTemplate}"></Setter>
+                    <Style.Triggers>
+                        <!--check if width less than converter parameter then show small template-->
+                        <DataTrigger Binding="{Binding ElementName=mainWindow,Path=Width,Converter={StaticResource IsSmallResolution},ConverterParameter=600}" Value="True">
+                            <Setter Property="ContentTemplate" Value="{StaticResource SmallTemplate}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ContentControl.Style>
+        </ContentControl>
+
+        <ScrollViewer Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2">
+            <ItemsControl ItemsSource="{Binding Path=Items}">
+                <!--styling items inside itemscontrol to have icons names and bla bla-->
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button x:Name="parentGrid" Style="{DynamicResource SquareButtonStyle}" BorderBrush="{x:Null}">
+                            <Grid Width="120" Height="120" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition />
+                                    <RowDefinition Height="20"/>
+                                </Grid.RowDefinitions>
+                                <!--header for items of itemscontrol visible on mouse hover-->
+                                <Grid Grid.ColumnSpan="3" Height="30" Visibility="{Binding Path=IsMouseOver, ElementName=parentGrid, Converter={StaticResource boolToVisibillityConverter}}">
+                                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal" FlowDirection="RightToLeft">
                                         <Button Width="25" Height="25" Margin="4,0" Foreground="{x:Null}"  BorderBrush="{x:Null}" Style="{StaticResource MaterialDesignFloatingActionMiniButton }">
                                             <iconPacks:PackIconMaterial Padding="2" Foreground="white" Kind="Delete" />
                                         </Button>
@@ -46,37 +87,27 @@
 
                                         </Button>
                                     </StackPanel>
+                                </Grid>
+                                <!--binding size from bytes to mb with converter-->
+                                <TextBlock Text="{Binding Size,Converter={StaticResource SizeConverter}}" Grid.Row="2" Grid.ColumnSpan="2" FontSize="10"/>
+                                <StackPanel Orientation="Vertical" Grid.Row="1" Margin="0,-4,0,4">
+                                    <Image Source="{Binding Icon}" Width="40"  Height="40" />
+                                    <!--binding file type with default value-->
+                                    <TextBlock Text="{Binding Type,FallbackValue='Folder'}" HorizontalAlignment="Center" FontSize="9" />
 
-
+                                </StackPanel>
+                                <TextBlock Text="{Binding Name}" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="11"  Margin="3" TextWrapping="Wrap"  Grid.Column="1" Grid.RowSpan="3"/>
                             </Grid>
-                            <TextBlock Text="{Binding Size,Converter={StaticResource SizeConverter}}" Grid.Row="2" Grid.ColumnSpan="2" FontSize="10"/>
-                            <StackPanel Orientation="Vertical" Grid.Row="1" Margin="0,-4,0,4">
-                                <Image Source="{Binding Icon}" Width="40"  Height="40" />
-                                <TextBlock Text="{Binding Type,FallbackValue='Folder'}" HorizontalAlignment="Center" FontSize="9" />
-
-                            </StackPanel>
-                            <TextBlock Text="{Binding Name}" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="11"  Margin="3" TextWrapping="Wrap"  Grid.Column="1" Grid.RowSpan="3"/>
-                        </Grid>
                         </Button>
                     </DataTemplate>
-            </ItemsControl.ItemTemplate>
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal"  />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>
+                </ItemsControl.ItemTemplate>
+                <!--this will make itemscontrol view to fit in horizontal scale and wrap to next line at overflow-->
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"  />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
         </ScrollViewer>
-        <!--<ListView ItemsSource="{Binding Path=Items}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <WrapPanel>
-                        <Image Source="{Binding Icon}" Width="60" Height="60"/>
-                        <TextBlock Text="{Binding Name}" FontWeight="Bold" Width="60" TextWrapping="Wrap" Height="60"/>
-                    </WrapPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-
-        </ListView>-->
     </Grid>
 </Controls:MetroWindow>

@@ -82,8 +82,10 @@
     </ApplicationDefinition>
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\FileSizeConverter.cs" />
+    <Compile Include="Converters\IsSmallResolution.cs" />
     <Compile Include="Entities\FileEntity.cs" />
     <Compile Include="Entities\DirectoryEntity.cs" />
+    <Compile Include="Entities\Menu\MenuItem.cs" />
     <Compile Include="Static\GetFolderIcon.cs" />
     <Compile Include="Entities\IFile.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
