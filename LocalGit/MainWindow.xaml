@@ -3,10 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="clr-namespace:LocalGit.ViewModel"
         xmlns:cv="clr-namespace:LocalGit.Converters"
         xmlns:local="clr-namespace:LocalGit"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:valueConverters="clr-namespace:LocalGit.ValueConverters"
 
         mc:Ignorable="d"
@@ -226,13 +224,9 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid Grid.Column="1" Grid.ColumnSpan="2" Background="Sienna"></Grid>
-            <!--i'm using content control here to have two different views in one control, one for small width and one for big width , i can create different views in one page using content control just bind its ContentTemplate to your view , i think ContentPresenter can do this too-->
-        <ContentControl Grid.Column="0" Grid.Row="1" Grid.RowSpan="2">
+
+        <!--i'm using content control here to have two different views in one control, one for small width and one for big width , i can create different views in one page using content control just bind its ContentTemplate to your view , i think ContentPresenter can do this too-->
+        <ContentControl Grid.Column="0"  >
             <ContentControl.Style>
                 <Style TargetType="ContentControl">
                     <!--set contents template default value for bigtemplate-->
@@ -246,8 +240,8 @@
                 </Style>
             </ContentControl.Style>
         </ContentControl>
-        <ContentControl Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Padding="{Binding InnerContentPadding}" Content="{Binding CurrentPage,Converter={valueConverters:ApplicationPageValueConverter}}">
-        </ContentControl>
+        <Frame  Grid.Column="1"  Grid.ColumnSpan="2" Padding="{Binding InnerContentPadding}" Content="{Binding CurrentPage,Converter={valueConverters:ApplicationPageValueConverter}}">
+        </Frame>
         
     </Grid>
 </Window>

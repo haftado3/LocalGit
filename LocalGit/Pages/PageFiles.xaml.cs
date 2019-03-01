@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace LocalGit.Pages
 {
     /// <summary>
-    /// Interaction logic for WelcomePage.xaml
+    /// Interaction logic for PageFiles.xaml
     /// </summary>
-    public partial class WelcomePage : UserControl
+    public partial class PageFiles : BasePage
     {
-        public WelcomePage()
+        public PageFiles()
         {
             InitializeComponent();
         }

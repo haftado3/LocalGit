@@ -16,13 +16,18 @@ using System.Windows.Shapes;
 namespace LocalGit.Pages
 {
     /// <summary>
-    /// Interaction logic for FilesPage.xaml
+    /// Interaction logic for PageLogin.xaml
     /// </summary>
-    public partial class FilesPage : UserControl
+    public partial class PageLogin : BasePage
     {
-        public FilesPage()
+        public PageLogin()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.AnimateOut();
         }
     }
 }

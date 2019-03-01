@@ -1,20 +1,21 @@
-﻿<UserControl x:Class="LocalGit.Pages.FilesPage"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:entities="clr-namespace:LocalGit.Entities"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             xmlns:cv="clr-namespace:LocalGit.Converters"
-             xmlns:vm="clr-namespace:LocalGit.ViewModel"
-             
-             mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="600">
-    <UserControl.Resources>
-        <vm:FilesViewModel x:Key="FilesVm"/>
+﻿<pages:BasePage x:Class="LocalGit.Pages.PageFiles"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:entities="clr-namespace:LocalGit.Entities"
+      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+      xmlns:viewModel="clr-namespace:LocalGit.ViewModel"
+      xmlns:converters="clr-namespace:LocalGit.Converters"
+      xmlns:pages="clr-namespace:LocalGit.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="PageFiles">
+    <Page.Resources>
+        <viewModel:FilesViewModel x:Key="FilesVm"/>
         <BooleanToVisibilityConverter x:Key="BoolToVisibillityConverter"/>
-        <cv:FileSizeConverter x:Key="SizeConverter"/>
-    </UserControl.Resources>
+        <converters:FileSizeConverter x:Key="SizeConverter"/>
+    </Page.Resources>
     <Grid DataContext="{StaticResource FilesVm}">
         <ScrollViewer>
             <ItemsControl ItemsSource="{Binding Path=Items}">
@@ -35,13 +36,13 @@
                                 <!--header for items of itemscontrol visible on mouse hover-->
                                 <Grid Grid.ColumnSpan="3" Height="30" Visibility="{Binding Path=IsMouseOver, ElementName=parentGrid, Converter={StaticResource BoolToVisibillityConverter}}">
                                     <StackPanel VerticalAlignment="Center" Orientation="Horizontal" FlowDirection="RightToLeft">
-                                        <Button Width="25" Height="25" Margin="4,0" Foreground="{x:Null}"  BorderBrush="{x:Null}" Style="{StaticResource MaterialDesignFloatingActionMiniButton }">
+                                        <Button Width="25" Height="25" Margin="4,0" Foreground="{x:Null}"  BorderBrush="{x:Null}" >
                                             <iconPacks:PackIconMaterial Padding="2" Foreground="white" Kind="Delete" />
                                         </Button>
-                                        <Button Width="25" Height="25" Foreground="{x:Null}"  BorderBrush="{x:Null}" Style="{StaticResource MaterialDesignFloatingActionMiniButton }">
+                                        <Button Width="25" Height="25" Foreground="{x:Null}"  BorderBrush="{x:Null}" >
                                             <iconPacks:PackIconMaterial Padding="2" Foreground="white" Kind="PlaylistEdit" />
                                         </Button>
-                                        <Button Width="25" Height="25" Margin="4,0" Foreground="{x:Null}"  BorderBrush="{x:Null}" Style="{StaticResource MaterialDesignFloatingActionMiniButton }">
+                                        <Button Width="25" Height="25" Margin="4,0" Foreground="{x:Null}"  BorderBrush="{x:Null}" >
                                             <iconPacks:PackIconMaterial Padding="2" Foreground="white" Kind="ContentCopy" />
 
                                         </Button>
@@ -75,7 +76,7 @@
                                 <Grid Grid.ColumnSpan="3" Height="30" Visibility="{Binding Path=IsMouseOver, ElementName=parentGrid, Converter={StaticResource BoolToVisibillityConverter}}">
                                     <StackPanel VerticalAlignment="Center" Orientation="Horizontal" FlowDirection="RightToLeft">
 
-                                        <Button Width="25" Height="25" Foreground="{x:Null}"  BorderBrush="{x:Null}" Style="{StaticResource MaterialDesignFloatingActionMiniButton }">
+                                        <Button Width="25" Height="25" Foreground="{x:Null}"  BorderBrush="{x:Null}" >
                                             <iconPacks:PackIconMaterial Padding="2" Foreground="white" Kind="PlaylistEdit" />
                                         </Button>
 
@@ -158,4 +159,5 @@
             </ItemsControl>
         </ScrollViewer>
     </Grid>
-</UserControl>
+</pages:BasePage>
+

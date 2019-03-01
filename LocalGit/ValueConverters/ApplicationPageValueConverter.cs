@@ -17,9 +17,9 @@ namespace LocalGit.ValueConverters
             switch ((ApplicationPage)value)
             {
                 case ApplicationPage.Login:
-                    return new WelcomePage();
+                    return new PageLogin();
                 case ApplicationPage.Files:
-                    return new FilesPage();
+                    return new PageFiles();
                     break;
                 default:
                     Debugger.Break();
