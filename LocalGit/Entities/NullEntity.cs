@@ -6,10 +6,11 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using LocalGit.ViewModel;
 
 namespace LocalGit.Entities
 {
-    public class NullEntity : IFile
+    public class NullEntity : BaseViewModel,IFile
     {
         public BitmapSource Icon
         {
@@ -30,14 +31,5 @@ namespace LocalGit.Entities
             set;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
     }
 }

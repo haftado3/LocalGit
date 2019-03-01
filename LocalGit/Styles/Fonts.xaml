@@ -1,7 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:LocalGit">
+                    xmlns:local="clr-namespace:LocalGit"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
     <FontFamily x:Key="LatoRegular">pack:///application;,,,/Fonts/#Lato Regular</FontFamily>
+    <FontFamily x:Key="LatoBold">pack:///application;,,,/Fonts/#Lato Bold</FontFamily>
     <FontFamily x:Key="LatoThin">pack:///application;,,,/Fonts/#Lato Thin</FontFamily>
     <Style TargetType="Control" x:Key="BaseStyle">
         <Setter Property="FontFamily" Value="{StaticResource LatoThin}"></Setter>
@@ -14,5 +16,9 @@
     <Style TargetType="ListView" BasedOn="{StaticResource BaseStyle}"></Style>
     <Style TargetType="Label" BasedOn="{StaticResource BaseStyle}"></Style>
     <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}"></Style>
+
+    <system:Double x:Key="FontSizeRegular">13</system:Double>
+    <system:Double x:Key="FontSizeSmall">10</system:Double>
+    <system:Double x:Key="FontSizeLarge">16</system:Double>
 
 </ResourceDictionary>

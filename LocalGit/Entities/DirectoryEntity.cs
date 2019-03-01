@@ -7,36 +7,13 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using LocalGit.ViewModel;
 
 namespace LocalGit.Entities
 {
-    public class DirectoryEntity : IFile
+    public class DirectoryEntity :BaseViewModel, IFile
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-        private BitmapSource _icon;
-
-        public BitmapSource Icon
-        {
-            get
-            {
-                return _icon;
-
-            }
-
-            set
-            {
-                _icon = value;
-                NotifyPropertyChanged(nameof(Icon));
-            }
-        }
+        public BitmapSource Icon { get; set; }
 
         public InfoType Info
         {
@@ -46,32 +23,8 @@ namespace LocalGit.Entities
             }
         }
 
-        private string _name;
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
+        public string Name { get; set; }
 
-            set
-            {
-                _name = value;
-                NotifyPropertyChanged(nameof(Name));
-            }
-        }
-        private long _size;
-        public long Size
-        {
-            get
-            {
-                return _size;
-            }
-            set
-            {
-                _size = value;
-                NotifyPropertyChanged(nameof(Size));
-            }
-        }
+        public long Size { get; set; }
     }
 }

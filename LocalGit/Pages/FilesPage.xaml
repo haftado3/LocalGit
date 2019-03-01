@@ -12,7 +12,7 @@
              d:DesignHeight="800" d:DesignWidth="600">
     <UserControl.Resources>
         <vm:FilesViewModel x:Key="FilesVm"/>
-        <cv:BooleanToVisibilityConverter x:Key="BoolToVisibillityConverter"/>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibillityConverter"/>
         <cv:FileSizeConverter x:Key="SizeConverter"/>
     </UserControl.Resources>
     <Grid DataContext="{StaticResource FilesVm}">

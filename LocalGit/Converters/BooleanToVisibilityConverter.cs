@@ -6,25 +6,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using LocalGit.ValueConverters;
 
 namespace LocalGit.Converters
 {
-    public class BooleanToVisibilityConverter : IValueConverter
+    /// <summary>
+    /// A converter that takes in a boolean and returns a <see cref="Visibility"/>
+    /// </summary>
+    public class BooleanToVisiblityConverter : BaseValueConverter<BooleanToVisiblityConverter>
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool flag = false;
-            if (value is bool)
-            {
-                flag = (bool)value;
-            }
-            return (flag ? Visibility.Visible : Visibility.Hidden);
+            return (bool)value ? Visibility.Hidden : Visibility.Visible;
         }
 
-
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
     }
+
 }

@@ -6,9 +6,56 @@
              xmlns:local="clr-namespace:LocalGit.Pages"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
-    <Grid Background="White">
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="55">
-                ▼▲ Welcome To LIND ▲▼
-            </TextBlock>
-    </Grid>
+    <Border Background="{StaticResource WordBlueBrush}">
+        <Grid >
+                <Grid.Background>
+                    <ImageBrush Opacity="0.1" TileMode="Tile" ViewportUnits="Absolute" Viewport="0 0 800 600" ImageSource="../Images/Backgrounds/portable-network.png"></ImageBrush>
+                </Grid.Background>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <StackPanel 
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    TextBlock.TextAlignment="Center">
+
+                    <!-- Login main content white box -->
+                    <Border Background="{StaticResource ForegroundLightBrush}" 
+                            CornerRadius="10"
+                            Padding="15 50 15 15"
+                            Width="330"
+                            Margin="50 50 50 0">
+
+                        <StackPanel>
+
+                            <!-- Sign Up header -->
+                            <TextBlock Text="Sign Up" 
+                                   FontSize="{StaticResource FontSizeLarge}" 
+                                   FontFamily="{StaticResource LatoRegular}"
+                                   Foreground="{StaticResource WordBlueBrush}" />
+
+                            <!-- Sign up subtext-->
+                            <TextBlock Text="It's about to get fun" 
+                                       FontSize="{StaticResource FontSizeRegular}"
+                                       Foreground="{StaticResource ForegroundDarkBrush}"
+                                       Margin="0 0 0 20"
+                                       />
+
+                            <!-- Email -->
+                            <TextBox Tag="Email" />
+
+                            <!-- Password -->
+                            <PasswordBox Tag="Password" Margin="0 0 0 30" />
+
+                            <!-- Next button -->
+                            <Button Content="Next" HorizontalAlignment="Center" />
+
+                        </StackPanel>
+
+                    </Border>
+
+                    <Button Style="{StaticResource TextButton}" Content="I already have an account" HorizontalAlignment="Center" />
+
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Border>
 </UserControl>

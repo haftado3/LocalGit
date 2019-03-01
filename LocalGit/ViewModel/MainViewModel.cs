@@ -15,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using LocalGit.Command;
+using LocalGit.DataModel;
 using LocalGit.Pages;
 using PropertyChanged;
 using MenuItem = LocalGit.Entities.MenuItem;
@@ -59,17 +60,17 @@ namespace LocalGit.ViewModel
             };
 
 
-            SelectedInnerView = new WelcomePage();
+            //SelectedInnerView = new WelcomePage();
             ContainerMenu = new List<MenuItem>();
             ContainerMenu.Add(new MenuItem { Name = "Tasks" });
-            ContainerMenu.Add(new MenuItem { Name = "Files" ,View = new FilesPage()});
+            ContainerMenu.Add(new MenuItem { Name = "Files" ,View = ApplicationPage.Files});
 
         }
-        public List<MenuItem> ContainerMenu { get; set; } 
+        public List<MenuItem> ContainerMenu { get; set; }
 
+        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.Login;
 
-
-        public UserControl SelectedInnerView { get; set; }
+        //public UserControl SelectedInnerView { get; set; }
 
 
         private ICommand _menuClickCommand;
@@ -78,7 +79,7 @@ namespace LocalGit.ViewModel
 
         private void MenuClick(MenuItem mi)
         {
-            SelectedInnerView = mi.View;
+            CurrentPage = mi.View;
         }
 
         //public ICommand MenuClickCommand => _menuClickCommand ?? (_menuClickCommand = new RelayCommand<MenuItem>(async (o) => await MenuClick(o)));
@@ -132,7 +133,10 @@ namespace LocalGit.ViewModel
         /// <summary>
         /// The size of the resize border around the window
         /// </summary>
-        public int ResizeBorder { get; set; } = 6;
+        public int ResizeBorder
+        {
+            get { return Borderless ? 0 : 6; }
+        }
 
         /// <summary>
         /// The size of the resize border around the window, taking into account the outer margin
@@ -142,7 +146,7 @@ namespace LocalGit.ViewModel
         /// <summary>
         /// The padding of the inner content of the main window
         /// </summary>
-        public Thickness InnerContentPadding { get { return new Thickness(ResizeBorder); } }
+        public Thickness InnerContentPadding { get; set; } = new Thickness(0);
 
         /// <summary>
         /// The margin around the window to allow for a drop shadow
