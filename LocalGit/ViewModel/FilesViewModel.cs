@@ -14,18 +14,9 @@ using System.Windows.Media.Imaging;
 
 namespace LocalGit.ViewModel
 {
-    class FilesViewModel:INotifyPropertyChanged
+    class FilesViewModel:BaseViewModel
     {
-        private ObservableCollection<IFile> _items = new ObservableCollection<IFile>();
-        public ObservableCollection<IFile> Items
-        {
-            get { return _items; }
-            set
-            {
-                _items = value;
-                NotifyPropertyChanged(nameof(Items));
-            }
-        }
+        public ObservableCollection<IFile> Items { get; set; } 
         public async Task<long> DirSize(DirectoryInfo d)
         {
             return await Task.Run(async () => {
@@ -57,23 +48,23 @@ namespace LocalGit.ViewModel
 
         public FilesViewModel()
         {
+            ItemsLocation = new DirectoryInfo("D:\\");
             Populate();
         }
-        private DirectoryInfo _itemsLocation = new DirectoryInfo("D:\\");
+
         public DirectoryInfo ItemsLocation
         {
-            get
-            {
-                return _itemsLocation;
-            }
-            set
-            {
-                _itemsLocation = value;
-                NotifyPropertyChanged(nameof(ItemsLocation));
-            }
+            get;
+            set;
         }
+
         private async void Populate()
         {
+            if (Items == null)
+            {
+                Items = new ObservableCollection<IFile>();
+            }
+            if(Items.Count>0)
             Items.Clear();
             try
             {
@@ -104,15 +95,7 @@ namespace LocalGit.ViewModel
             Items.Add(new NullEntity());
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
 
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
 
     }
 }

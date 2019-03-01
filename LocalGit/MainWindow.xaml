@@ -1,4 +1,4 @@
-﻿<controls:MetroWindow x:Class="LocalGit.MainWindow"
+﻿<Window x:Class="LocalGit.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,11 +6,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:LocalGit.ViewModel"
         xmlns:cv="clr-namespace:LocalGit.Converters"
+        xmlns:local="clr-namespace:LocalGit"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 
         mc:Ignorable="d"
         d:DataContext="{Binding Source={StaticResource DesignVm}}"
-        Title="MainWindow" x:Name="mainWindow" Height="600" Width="800">
+        Title="MainWindow" x:Name="mainWindow" Height="600" Width="800"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
+        MinWidth="{Binding WindowMinimumWidth}"
+        MinHeight="{Binding WindowMinimumHeight}"
+        MaxWidth="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Width}"
+        MaxHeight="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Height}">
+    <WindowChrome.WindowChrome>
+        <WindowChrome
+            ResizeBorderThickness="{Binding ResizeBorderThickness}"
+            CaptionHeight="{Binding TitleHeight}"
+            CornerRadius="0"
+            GlassFrameThickness="0"
+        />
+    </WindowChrome.WindowChrome>
     <Window.Resources>
+
         <vm:MainViewModel x:Key="DesignVm"/>
 
         <cv:IsSmallResolution x:Key="IsSmallResolution"/>
@@ -21,7 +39,7 @@
         <!--left grids template for big resolution-->
         <DataTemplate x:Key="BigTemplate" >
             <!-- inside datatemplate datacontext is empty so you have to set it by element name or relative source, here i found parent of type metrowindow then i set its path to metrowindows datacontext -->
-            <Grid Width="150" Background="{StaticResource gradientBrush}" DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:MetroWindow}},Path=DataContext}">
+            <Grid Width="150" Background="{StaticResource gradientBrush}" DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}},Path=DataContext}">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -36,12 +54,27 @@
                     <Grid>
                         <TextBlock>Container</TextBlock>
                     </Grid>
-                    <Separator Grid.Row="1" />
-                    <ListBox ItemsSource="{Binding ContainerMenu}"  Grid.Row="2">
-
+                    <Separator Grid.Row="1" Opacity="0.4" />
+                    <ListBox  x:Name="BigMenu" ItemsSource="{Binding ContainerMenu}"  Grid.Row="2" >
+                        <!-- horizontally stretch listbox item-->
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                <!--WPF ListView turn off selection--><!--
+                                <Setter Property="Focusable" Value="false"/>-->
+                            </Style>
+                        </ListBox.ItemContainerStyle>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Name}"></TextBlock>
+                                <TextBlock Text="{Binding Name}">
+                                    <TextBlock.InputBindings>
+                                        <MouseBinding 
+                                            Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.MenuClickCommand}" 
+                                            CommandParameter="{Binding}"
+                                            MouseAction="LeftClick" Gesture="LeftClick" />
+                                    </TextBlock.InputBindings>
+                                </TextBlock>
+
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
@@ -55,7 +88,7 @@
                     <Grid>
                         <TextBlock>Chat</TextBlock>
                     </Grid>
-                    <Separator Grid.Row="1" />
+                    <Separator Grid.Row="1" Opacity="0.4" />
                     <ListBox ItemsSource="{Binding ContainerMenu}"  Grid.Row="2">
 
                         <ListBox.ItemTemplate>
@@ -76,6 +109,114 @@
 
             </Grid>
         </DataTemplate>
+        <Style TargetType="{x:Type local:MainWindow}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Window}">
+                        <!-- Outer border with the dropshadow margin -->
+                        <Border Padding="{Binding OuterMarginSizeThickness, FallbackValue=10}">
+
+                            <!-- Main window outline -->
+                            <Grid>
+
+                                <!-- Opacity mask for corners on grid -->
+                                <Border x:Name="Container"
+                                        Background="{StaticResource BackgroundLightBrush}"
+                                        CornerRadius="{Binding WindowCornerRadius, FallbackValue=10}" />
+
+                                <!-- Window border and dropshadown -->
+                                <Border CornerRadius="{Binding WindowCornerRadius, FallbackValue=10}"
+                                    Background="{Binding ForegroundLightBrush, FallbackValue=White}">
+                                    <Border.Effect>
+                                        <DropShadowEffect ShadowDepth="0" Opacity="0.2" />
+                                    </Border.Effect>
+                                </Border>
+
+                                <!-- The main window content -->
+                                <Grid>
+
+                                    <!-- Corner clipping -->
+                                    <Grid.OpacityMask>
+                                        <VisualBrush Visual="{Binding ElementName=Container}" />
+                                    </Grid.OpacityMask>
+
+                                    <Grid.RowDefinitions>
+
+                                        <!-- Title Bar -->
+                                        <RowDefinition Height="{Binding TitleHeightGridLength, FallbackValue=42}" />
+                                        <!-- Drop shadow -->
+                                        <RowDefinition Height="Auto" />
+                                        <!-- Window Content -->
+                                        <RowDefinition Height="*" />
+
+                                    </Grid.RowDefinitions>
+
+                                    <!-- Title Bar -->
+                                    <Grid Grid.Column="0" Panel.ZIndex="1">
+
+                                        <Grid.ColumnDefinitions>
+                                            <!-- Icon -->
+                                            <ColumnDefinition Width="Auto" />
+                                            <!-- Title -->
+                                            <ColumnDefinition Width="*" />
+                                            <!-- Windows Button -->
+                                            <ColumnDefinition Width="Auto" />
+
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- Icon -->
+                                        <Button Style="{StaticResource SystemIconButton}" Command="{Binding MenuCommand}">
+                                            <Image Source="/Images/Logo/arrow-1-forward_0.png" />
+                                        </Button>
+
+                                        <!-- Title -->
+                                        <Viewbox Grid.Column="1" Margin="0">
+                                            <TextBlock Style="{StaticResource HeaderText}" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title, FallbackValue='Welcome, friend!'}" />
+                                        </Viewbox>
+
+                                        <!-- Window Buttons -->
+                                        <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                            <Button Command="{Binding MinimizeCommand}" Style="{StaticResource WindowControlButton}" Content="_" />
+                                            <Button Command="{Binding MaximizeCommand}" Style="{StaticResource WindowControlButton}" Content="[ ]" />
+                                            <Button Command="{Binding CloseCommand}" Style="{StaticResource WindowCloseButton}" Content="X" />
+                                        </StackPanel>
+
+                                    </Grid>
+
+                                    <!-- Drop shadow -->
+                                    <Border Grid.Row="1" Height="6" BorderThickness="0 0.2 0 0">
+                                        <!-- Underline -->
+                                        <Border.BorderBrush>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1, 0">
+                                                <GradientStop Color="{StaticResource ForegroundLight}" Offset="0.0" />
+                                                <GradientStop Color="{StaticResource ForegroundMain}" Offset="0.5" />
+                                                <GradientStop Color="{StaticResource ForegroundLight}" Offset="1.0" />
+                                            </LinearGradientBrush>
+                                        </Border.BorderBrush>
+
+                                        <!-- Drop shadow -->
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0, 1">
+                                                <GradientStop Color="{StaticResource BackgroundVeryLight}" Offset="0.0" />
+                                                <GradientStop Color="{StaticResource ForegroundLight}" Offset="1.0" />
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+
+                                    </Border>
+
+                                    <!-- Page Content -->
+                                    <Border Grid.Row="2" >
+                                        <ContentPresenter Content="{TemplateBinding Content}" />
+                                    </Border>
+
+                                </Grid>
+
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
    
     <Grid>
@@ -90,7 +231,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Column="1" Grid.ColumnSpan="2" Background="Sienna"></Grid>
             <!--i'm using content control here to have two different views in one control, one for small width and one for big width , i can create different views in one page using content control just bind its ContentTemplate to your view , i think ContentPresenter can do this too-->
-        <ContentControl Grid.Row="1" Grid.RowSpan="2">
+        <ContentControl Grid.Column="0" Grid.Row="1" Grid.RowSpan="2">
             <ContentControl.Style>
                 <Style TargetType="ContentControl">
                     <!--set contents template default value for bigtemplate-->
@@ -108,5 +249,5 @@
         </ContentControl>
         
     </Grid>
-</controls:MetroWindow>
+</Window>
 

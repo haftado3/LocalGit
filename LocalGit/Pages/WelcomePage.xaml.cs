@@ -1,6 +1,4 @@
-﻿using LocalGit.ViewModel;
-using MahApps.Metro.Controls;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,17 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace LocalGit
+namespace LocalGit.Pages
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for WelcomePage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class WelcomePage : UserControl
     {
-        public MainWindow()
+        public WelcomePage()
         {
             InitializeComponent();
-            DataContext = new MainViewModel(this);
         }
     }
 }
