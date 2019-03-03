@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:cv="clr-namespace:LocalGit.Converters"
         xmlns:local="clr-namespace:LocalGit"
-        xmlns:valueConverters="clr-namespace:LocalGit.ValueConverters"
+        xmlns:userControls="clr-namespace:LocalGit.UserControls"
+        xmlns:chat="clr-namespace:LocalGit.UserControls.Chat"
 
         mc:Ignorable="d"
         Title="MainWindow" x:Name="mainWindow" Height="600" Width="800"
@@ -217,32 +218,40 @@
             </Setter>
         </Style>
     </Window.Resources>
-   
-    <Grid>
+    <Border Background="{StaticResource WordBlueBrush}">
+    <Grid >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+        <!-- Blue background image -->
+        <Grid.Background >
+            <ImageBrush TileMode="Tile" ViewportUnits="Absolute" Viewport="0 0 500 500" Opacity="0.1" ImageSource="/Images/Backgrounds/portable-network.png" />
+        </Grid.Background>
         <!--i'm using content control here to have two different views in one control, one for small width and one for big width , i can create different views in one page using content control just bind its ContentTemplate to your view , i think ContentPresenter can do this too-->
-        <ContentControl Grid.Column="0"  >
+        <!--<ContentControl Grid.Column="0"  >
             <ContentControl.Style>
                 <Style TargetType="ContentControl">
-                    <!--set contents template default value for bigtemplate-->
+                    --><!--set contents template default value for bigtemplate--><!--
                     <Setter Property="ContentTemplate" Value="{StaticResource BigTemplate}"></Setter>
                     <Style.Triggers>
-                        <!--check if width less than converter parameter then show small template-->
+                        --><!--check if width less than converter parameter then show small template--><!--
                         <DataTrigger Binding="{Binding ElementName=mainWindow,Path=Width,Converter={StaticResource IsSmallResolution},ConverterParameter=600}" Value="True">
                             <Setter Property="ContentTemplate" Value="{StaticResource SmallTemplate}"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </ContentControl.Style>
-        </ContentControl>
-        <Frame  Grid.Column="1"  Grid.ColumnSpan="2" Padding="{Binding InnerContentPadding}" Content="{Binding CurrentPage,Converter={valueConverters:ApplicationPageValueConverter}}">
-        </Frame>
-        
-    </Grid>
+        </ContentControl>-->
+            <userControls:SideMenuControl>
+                <chat:ChatListControl />
+            </userControls:SideMenuControl>
+        <Frame Grid.Column="1" x:Name="MainFrame" Content="{Binding CurrentPage, Converter={cv:ApplicationPageValueConverter}}" Background="Transparent" />
+
+
+        </Grid>
+   </Border>
 </Window>
+
+
 

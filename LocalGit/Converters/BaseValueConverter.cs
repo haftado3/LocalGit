@@ -7,13 +7,9 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace LocalGit.ValueConverters
+namespace LocalGit.Converters
 {
-    /// <summary>
-    ///   - new() means T has a default or parameter-less constructor like T() constructor or without cunstructor
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public abstract class BaseValueConverter<T> : MarkupExtension ,IValueConverter where T : class ,new()
+    public abstract class BaseValueConverter<T> : MarkupExtension, IValueConverter where T : class, new()
     {
         #region private members
         /// <summary>

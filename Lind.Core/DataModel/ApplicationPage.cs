@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LocalGit.DataModel
+﻿namespace Lind.Core.DataModel
 {
     /// <summary>
     /// a page of application
@@ -15,7 +9,11 @@ namespace LocalGit.DataModel
         /// the initial Login Page
         /// </summary>
         Login = 0,
-        Register = 1,
-        Files = 2,
+        /// <summary>
+        ///  the main chat page
+        /// </summary>
+        Chat = 1,
+        Register = 2,
+        Files = 3,
     }
 }

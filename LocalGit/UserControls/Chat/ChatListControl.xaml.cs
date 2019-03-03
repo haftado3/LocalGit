@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace LocalGit.Pages
+namespace LocalGit.UserControls.Chat
 {
     /// <summary>
-    /// Interaction logic for PageFiles.xaml
+    /// Interaction logic for ChatListControl.xaml
     /// </summary>
-    public partial class PageFiles : BasePage
+    public partial class ChatListControl : UserControl
     {
-        public PageFiles()
+        public ChatListControl()
         {
             InitializeComponent();
         }

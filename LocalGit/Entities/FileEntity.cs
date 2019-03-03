@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using Lind.Core.ViewModel;
 using LocalGit.ViewModel;
 
 namespace LocalGit.Entities

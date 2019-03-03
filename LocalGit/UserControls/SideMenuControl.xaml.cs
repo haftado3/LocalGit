@@ -13,21 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace LocalGit.Pages
+namespace LocalGit.UserControls
 {
     /// <summary>
-    /// Interaction logic for PageLogin.xaml
+    /// Interaction logic for SideMenuControl.xaml
     /// </summary>
-    public partial class PageLogin : BasePage
+    public partial class SideMenuControl : UserControl
     {
-        public PageLogin()
+        public SideMenuControl()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.AnimateOut();
         }
     }
 }

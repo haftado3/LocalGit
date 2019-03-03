@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalGit", "LocalGit\LocalGit.csproj", "{E9503685-1A3D-4372-B018-B12564BFF386}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lind.Core", "Lind.Core\Lind.Core.csproj", "{6D1B4794-A7DE-405D-A34F-7391EE373B9B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{E9503685-1A3D-4372-B018-B12564BFF386}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9503685-1A3D-4372-B018-B12564BFF386}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9503685-1A3D-4372-B018-B12564BFF386}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D1B4794-A7DE-405D-A34F-7391EE373B9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D1B4794-A7DE-405D-A34F-7391EE373B9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D1B4794-A7DE-405D-A34F-7391EE373B9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D1B4794-A7DE-405D-A34F-7391EE373B9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

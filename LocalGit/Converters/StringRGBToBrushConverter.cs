@@ -4,22 +4,18 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Data;
+using System.Windows.Media;
 
 namespace LocalGit.Converters
 {
     /// <summary>
-    /// A converter that takes in a boolean and returns a <see cref="Visibility"/>
+    /// A converter that takes in an RGB string such as FF00FF and converts it to a WPF brush
     /// </summary>
-    public class BooleanToVisiblityConverter : BaseValueConverter<BooleanToVisiblityConverter>
+    public class StringRGBToBrushConverter : BaseValueConverter<StringRGBToBrushConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (parameter == null)
-                return (bool)value ? Visibility.Hidden : Visibility.Visible;
-            else
-                return (bool)value ? Visibility.Visible : Visibility.Hidden;
+            return (SolidColorBrush)(new BrushConverter().ConvertFrom($"#{value}"));
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -27,5 +23,4 @@ namespace LocalGit.Converters
             throw new NotImplementedException();
         }
     }
-
 }

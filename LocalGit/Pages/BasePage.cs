@@ -3,15 +3,38 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using LocalGit.Animation;
 using System.Windows;
+using Lind.Core.ViewModel;
 
 namespace LocalGit.Pages
 {
     /// <summary>
     /// A base page for all pages to gain base functionality
     /// </summary>
-    public class BasePage : Page
+    public class BasePage<VM> : Page where VM : BaseViewModel,new()
     {
+        #region Private Properties
+
+        private VM _ViewModel;
+
+        #endregion
+
         #region Public Properties
+
+        public VM ViewModel
+        {
+            get { return _ViewModel; }
+            set
+            {
+                if (value == ViewModel)
+                {
+                    return;
+                }
+
+                _ViewModel = value;
+                this.DataContext = _ViewModel;
+            }
+        }
+
 
         /// <summary>
         /// The animation the play when the page is first loaded
@@ -43,6 +66,7 @@ namespace LocalGit.Pages
 
             // Listen out for the page loading
             this.Loaded += BasePage_Loaded;
+            this.ViewModel = new VM();
         }
 
         #endregion

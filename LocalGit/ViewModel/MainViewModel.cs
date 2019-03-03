@@ -14,8 +14,9 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
-using LocalGit.Command;
-using LocalGit.DataModel;
+using Lind.Core.DataModel;
+using Lind.Core.ViewModel;
+using Lind.Core.ViewModel.Base;
 using LocalGit.Pages;
 using PropertyChanged;
 using MenuItem = LocalGit.Entities.MenuItem;
@@ -41,10 +42,10 @@ namespace LocalGit.ViewModel
             };
 
             // Create commands
-            MinimizeCommand = new RelayCommand((o) => mWindow.WindowState = WindowState.Minimized);
-            MaximizeCommand = new RelayCommand((o) => mWindow.WindowState ^= WindowState.Maximized);
-            CloseCommand = new RelayCommand((o) => mWindow.Close());
-            MenuCommand = new RelayCommand((o) => SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()));
+            MinimizeCommand = new RelayCommand(() => mWindow.WindowState = WindowState.Minimized);
+            MaximizeCommand = new RelayCommand(() => mWindow.WindowState ^= WindowState.Maximized);
+            CloseCommand = new RelayCommand(() => mWindow.Close());
+            MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()));
 
             // Fix window resize issue
             var resizer = new WindowResizer(mWindow);
@@ -73,14 +74,14 @@ namespace LocalGit.ViewModel
         //public UserControl SelectedInnerView { get; set; }
 
 
-        private ICommand _menuClickCommand;
+        //private ICommand _menuClickCommand;
 
-        public ICommand MenuClickCommand => _menuClickCommand ?? (_menuClickCommand = new RelayCommand<MenuItem>(MenuClick));
+        //public ICommand MenuClickCommand => _menuClickCommand ?? (_menuClickCommand = new RelayCommand<MenuItem>(MenuClick));
 
-        private void MenuClick(MenuItem mi)
-        {
-            CurrentPage = mi.View;
-        }
+        //private void MenuClick(MenuItem mi)
+        //{
+        //    CurrentPage = mi.View;
+        //}
 
         //public ICommand MenuClickCommand => _menuClickCommand ?? (_menuClickCommand = new RelayCommand<MenuItem>(async (o) => await MenuClick(o)));
 
@@ -118,12 +119,12 @@ namespace LocalGit.ViewModel
         /// <summary>
         /// The smallest width the window can go to
         /// </summary>
-        public double WindowMinimumWidth { get; set; } = 400;
+        public double WindowMinimumWidth { get; set; } = 800;
 
         /// <summary>
         /// The smallest height the window can go to
         /// </summary>
-        public double WindowMinimumHeight { get; set; } = 400;
+        public double WindowMinimumHeight { get; set; } = 600;
 
         /// <summary>
         /// True if the window should be borderless because it is docked or maximized
