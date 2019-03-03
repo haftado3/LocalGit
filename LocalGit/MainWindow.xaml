@@ -7,6 +7,7 @@
         xmlns:local="clr-namespace:LocalGit"
         xmlns:userControls="clr-namespace:LocalGit.UserControls"
         xmlns:chat="clr-namespace:LocalGit.UserControls.Chat"
+        xmlns:viewModel="clr-namespace:LocalGit.ViewModel"
 
         mc:Ignorable="d"
         Title="MainWindow" x:Name="mainWindow" Height="600" Width="800"
@@ -246,7 +247,10 @@
             <userControls:SideMenuControl>
                 <chat:ChatListControl />
             </userControls:SideMenuControl>
-        <Frame Grid.Column="1" x:Name="MainFrame" Content="{Binding CurrentPage, Converter={cv:ApplicationPageValueConverter}}" Background="Transparent" />
+            <Frame Grid.Column="1" x:Name="MainFrame" 
+                   Content="{Binding ApplicationViewModel.CurrentPage,
+                    Source={x:Static viewModel:ViewModelLocator.Instance},
+                    Converter={cv:ApplicationPageValueConverter}}" Background="Transparent" />
 
 
         </Grid>

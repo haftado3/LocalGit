@@ -1,6 +1,11 @@
-﻿using System.Security;
+﻿using System;
+using System.Runtime.InteropServices;
+using System.Security;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
+using Lind.Core.DataModel;
+using Lind.Core.IoCContainer;
 using Lind.Core.Security;
 using Lind.Core.ViewModel.Base;
 
@@ -32,6 +37,8 @@ namespace Lind.Core.ViewModel
         /// </summary>
         public ICommand LoginCommand { get; set; }
 
+        public ICommand RegisterCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -43,6 +50,7 @@ namespace Lind.Core.ViewModel
         {
             // Create commands
             LoginCommand = new RelayParameterizedCommand(async (parameter) => await Login(parameter));
+            RegisterCommand = new RelayCommand(async () => await RegisterAsync());
         }
 
         #endregion
@@ -63,6 +71,18 @@ namespace Lind.Core.ViewModel
                 // IMPORTANT: Never store unsecure password in variable like this
                 var pass = (parameter as IHavePassword).SecurePassword.Unsecure();
             });
+        }
+
+        /// <summary>
+        /// Takes the user to the register page
+        /// </summary>
+        /// <returns></returns>
+        public async Task RegisterAsync()
+        {
+            // Go to register page?
+            IoC.Get<ApplicationViewModel>().CurrentPage = ApplicationPage.Register;
+
+            await Task.Delay(1);
         }
     }
 }

@@ -1,16 +1,14 @@
-﻿<pages:BasePage x:Class="LocalGit.Pages.LoginPage"
-                x:TypeArguments="viewModel1:LoginViewModel"
+﻿<local:BasePage x:TypeArguments="viewModel:LoginViewModel" x:Class="LocalGit.Pages.RegisterPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:LocalGit.Pages"
+      xmlns:viewModel="clr-namespace:Lind.Core.ViewModel;assembly=Lind.Core"
       xmlns:attachedProperties="clr-namespace:LocalGit.AttachedProperties"
-      xmlns:viewModel1="clr-namespace:Lind.Core.ViewModel;assembly=Lind.Core"
-      xmlns:pages="clr-namespace:LocalGit.Pages"
       mc:Ignorable="d" 
-      x:Name="Page"
-      d:DesignHeight="800" d:DesignWidth="600"
-      Title="PageLogin">
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="RegisterPage">
     <Border>
         <Grid>
 
@@ -31,7 +29,7 @@
                         <StackPanel>
 
                             <!-- Sign Up header -->
-                            <TextBlock Text="Sign In" 
+                            <TextBlock Text="Sign Up" 
                                    FontSize="{StaticResource FontSizeLarge}" 
                                    FontFamily="{StaticResource LatoRegular}"
                                    Foreground="{StaticResource WordBlueBrush}" />
@@ -50,7 +48,7 @@
                             <PasswordBox x:Name="PasswordText" Tag="Password" Margin="0 0 0 30" />
 
                             <!-- Next button -->
-                            <Button Content="Login" 
+                            <Button Content="Register" 
                                     attachedProperties:IsBusyProperty.Value="{Binding LoginIsRunning}"
                                     Command="{Binding LoginCommand}"
                                     CommandParameter="{Binding ElementName=Page}" 
@@ -60,11 +58,10 @@
 
                     </Border>
 
-                    <Button Style="{StaticResource TextButton}" Content="I already have an account" Command="{Binding RegisterCommand}" HorizontalAlignment="Center" />
+                    <Button Style="{StaticResource TextButton}" Content="Or, I already have an account..." HorizontalAlignment="Center" />
 
                 </StackPanel>
             </ScrollViewer>
         </Grid>
     </Border>
-</pages:BasePage>
-
+</local:BasePage>

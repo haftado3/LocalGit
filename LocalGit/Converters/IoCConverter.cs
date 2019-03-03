@@ -5,25 +5,22 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Lind.Core.DataModel;
+using System.Windows.Data;
+using Lind.Core.IoCContainer;
+using Lind.Core.ViewModel;
 using LocalGit.Pages;
+using Ninject;
 
 namespace LocalGit.Converters
 {
-    class ApplicationPageValueConverter : BaseValueConverter<ApplicationPageValueConverter>
+    public class IoCConverter:BaseValueConverter<IoCConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            switch ((ApplicationPage)value)
+            switch ((string)parameter)
             {
-                case ApplicationPage.Login:
-                    return new LoginPage();
-                case ApplicationPage.Files:
-                    return new FilesPage();
-                case ApplicationPage.Chat:
-                    return new ChatPage();
-                case ApplicationPage.Register:
-                    return new RegisterPage();
+                case nameof(ApplicationViewModel):
+                    return IoC.Get<ApplicationViewModel>();
                 default:
                     Debugger.Break();
                     return null;

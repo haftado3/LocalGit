@@ -2,6 +2,7 @@
 
 
 using System.Windows;
+using Lind.Core.ViewModel;
 
 
 namespace LocalGit
@@ -11,6 +12,7 @@ namespace LocalGit
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         public MainWindow()
         {
             InitializeComponent();
